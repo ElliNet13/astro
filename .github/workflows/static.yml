@@ -42,12 +42,6 @@ jobs:
 
       - name: Build site
         run: npm run build
-
-      - name: LEt's do some testing
-        run: ls
-        
-      - name: Checkout
-        uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
