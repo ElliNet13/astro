@@ -1,0 +1,32 @@
+---
+import { parse } from 'node-html-parser';
+
+// Function to fetch and process HTML
+async function fetchData() {
+  const response = await fetch('https://ellinet13.github.io');
+  const html = await response.text();
+  const root = parse(html);
+
+  // Extract all 'a' elements' text except the specified link
+  const links = root.querySelectorAll('a')
+    .filter(a => a.getAttribute('href') !== 'https://bitly.com/pages/products/pages?utm_source=bitly&utm_medium=link-in-bio&utm_campaign=bitly-logo')
+    .map(a => a.innerText);
+
+  return links;
+}
+
+// Fetch data at build time
+const links = await fetchData();
+---
+
+<html>
+  <head>
+    <title>Astro Example</title>
+  </head>
+  <body>
+    <h1>Links from ellinet13.github.io</h1>
+    <ul>
+      {links.map(link => <li>{link}</li>)}
+    </ul>
+  </body>
+</html>
