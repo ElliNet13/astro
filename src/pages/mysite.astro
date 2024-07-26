@@ -1,4 +1,3 @@
----
 import { parse } from 'node-html-parser';
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
@@ -9,9 +8,12 @@ async function fetchData() {
   const html = await response.text();
   const root = parse(html);
 
-  // Extract all 'a' elements except the specified link
+  // Extract all 'a' elements except the specified links
   const links = root.querySelectorAll('a')
-    .filter(a => a.getAttribute('href') !== 'https://bitly.com/pages/products/pages?utm_source=bitly&utm_medium=link-in-bio&utm_campaign=bitly-logo')
+    .filter(a => ![
+      'https://bitly.com/pages/products/pages?utm_source=bitly&utm_medium=link-in-bio&utm_campaign=bitly-logo',
+      'https://www.addtoany.com/subscribe'
+    ].includes(a.getAttribute('href')))
     .map(a => ({
       href: a.getAttribute('href'),
       text: a.innerText
@@ -67,6 +69,7 @@ try {
     </ul>
   </main>
 </Layout>
+
 <style>
   main {
     margin: auto;
