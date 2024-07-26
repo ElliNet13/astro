@@ -11,5 +11,6 @@
   },
   "dependencies": {
     "astro": "^4.12.2"
+    "node-html-parser": "^6.1.13"
   }
 }
